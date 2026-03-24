@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="太原精进">
+<title>太原一年 · 三事精进</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+:root {
+  --ink: #16120e;
+  --vermillion: #b5341e;
+  --gold: #c49a28;
+  --gold-light: #e8c96a;
+  --jade: #2a6352;
+  --jade-light: #d4ede6;
+  --stone: #7a6a55;
+  --paper: #faf7f2;
+  --cream: #f2ebe0;
+  --mist: #e0d5c5;
+  --blue: #1a3a5c;
+  --blue-light: #dce8f5;
+  --red-light: #fdecea;
+  --safe-top: env(safe-area-inset-top, 44px);
+  --safe-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Noto Sans SC', sans-serif;
+  min-height: 100vh;
+  font-size: 15px;
+  padding-bottom: calc(80px + var(--safe-bottom));
+}
+
+/* ── SPLASH HEADER ── */
+.splash {
+  background: var(--ink);
+  padding: calc(var(--safe-top) + 28px) 20px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.splash::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(90deg, transparent, transparent 48px, rgba(196,154,40,0.07) 48px, rgba(196,154,40,0.07) 49px),
+    repeating-linear-gradient(0deg, transparent, transparent 48px, rgba(196,154,40,0.07) 48px, rgba(196,154,40,0.07) 49px);
+}
+.splash-inner { position: relative; z-index: 1; }
+.splash h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 26px;
+  color: #fff;
+  letter-spacing: 3px;
+  line-height: 1.3;
+}
+.splash-sub {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  color: var(--gold-light);
+  font-size: 14px;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+.splash-meta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-top: 18px;
+}
+.meta-chip {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(196,154,40,0.3);
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.5px;
+}
+.meta-chip strong { color: var(--gold-light); font-weight: 500; }
+
+/* ── GOAL STRIPS ── */
+.goal-strip {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--mist);
+}
+.goal-item {
+  padding: 14px 10px;
+  text-align: center;
+  border-right: 1px solid var(--mist);
+  background: white;
+}
+.goal-item:last-child { border-right: none; }
+.goal-icon { font-size: 20px; margin-bottom: 4px; }
+.goal-label { font-size: 10px; color: var(--stone); letter-spacing: 0.5px; }
+.goal-val { font-family: 'Noto Serif SC', serif; font-size: 12px; color: var(--ink); margin-top: 2px; line-height: 1.4; }
+
+/* ── NAV TABS ── */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: white;
+  border-bottom: 2px solid var(--mist);
+  display: flex; overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav-tab {
+  flex: 0 0 auto;
+  padding: 11px 16px;
+  font-size: 12px;
+  color: var(--stone);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  transition: color 0.2s, border-color 0.2s;
+  font-weight: 500;
+}
+.nav-tab.active { color: var(--vermillion); border-bottom-color: var(--vermillion); }
+
+/* ── SECTIONS ── */
+.section { display: none; padding: 0 0 20px; }
+.section.active { display: block; }
+
+/* ── CARD ── */
+.card {
+  background: white;
+  border: 1px solid var(--mist);
+  margin: 14px 14px 0;
+  overflow: hidden;
+}
+.card-head {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--cream);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-body { padding: 14px; }
+
+/* ── QUARTER PILLS ── */
+.q-tabs {
+  display: flex; gap: 8px;
+  padding: 14px 14px 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.q-tabs::-webkit-scrollbar { display: none; }
+.q-tab {
+  flex: 0 0 auto;
+  padding: 7px 16px;
+  border: 1.5px solid var(--mist);
+  background: white;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.18s;
+  border-radius: 2px;
+}
+.q-tab.active-q1 { background: var(--jade); color: white; border-color: var(--jade); }
+.q-tab.active-q2 { background: var(--gold); color: white; border-color: var(--gold); }
+.q-tab.active-q3 { background: var(--vermillion); color: white; border-color: var(--vermillion); }
+.q-tab.active-q4 { background: var(--blue); color: white; border-color: var(--blue); }
+
+.q-panel { display: none; }
+.q-panel.active { display: block; }
+
+/* milestone rows */
+.ms-row {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cream);
+}
+.ms-row:last-child { border-bottom: none; }
+.ms-dot {
+  width: 22px; height: 22px; border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0; margin-top: 1px;
+}
+.dot-w { background: #e8f5e9; }
+.dot-t { background: #fff3e0; }
+.dot-e { background: #e3f2fd; }
+.ms-body { flex: 1; }
+.ms-main { font-size: 13px; color: var(--ink); line-height: 1.5; }
+.ms-main strong { color: var(--vermillion); }
+.ms-sub { font-size: 11px; color: var(--stone); margin-top: 3px; line-height: 1.5; font-family: 'Crimson Pro', serif; font-size: 12px; }
+
+/* ── WEEKLY SCHEDULE ── */
+.day-tabs {
+  display: flex; gap: 6px; padding: 14px 14px 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.day-tabs::-webkit-scrollbar { display: none; }
+.day-tab {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border: 1.5px solid var(--mist);
+  background: white;
+  font-size: 12px; font-weight: 500;
+  cursor: pointer; border-radius: 2px;
+  transition: all 0.18s;
+}
+.day-tab.active { background: var(--ink); color: white; border-color: var(--ink); }
+.day-panel { display: none; }
+.day-panel.active { display: block; }
+
+.time-block {
+  display: flex; gap: 0;
+  border-bottom: 1px solid var(--cream);
+}
+.time-block:last-child { border-bottom: none; }
+.tb-time {
+  width: 52px; flex-shrink: 0;
+  padding: 10px 8px;
+  font-size: 10px; color: var(--stone);
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; line-height: 1.4;
+  font-family: 'Crimson Pro', serif;
+  font-size: 12px;
+  border-right: 2px solid var(--mist);
+}
+.tb-content { flex: 1; padding: 10px 12px; }
+.tb-tag {
+  display: inline-block;
+  padding: 1px 6px; border-radius: 2px;
+  font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.tag-w { background: #e8f5e9; color: #2e7d32; }
+.tag-t { background: #fff3e0; color: #bf360c; }
+.tag-e { background: #e3f2fd; color: #0d47a1; }
+.tag-r { background: var(--red-light); color: #b71c1c; }
+.tb-title { font-size: 13px; color: var(--ink); line-height: 1.5; }
+.tb-sub { font-size: 11px; color: var(--stone); margin-top: 2px; line-height: 1.4; }
+
+/* ── CHECKLIST ── */
+.check-list { padding: 0; }
+.check-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--cream);
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item:active { background: var(--cream); }
+.check-item.done .ci-box {
+  background: var(--jade);
+  border-color: var(--jade);
+}
+.check-item.done .ci-box::after {
+  content: '✓';
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+}
+.check-item.done .ci-text { opacity: 0.45; text-decoration: line-through; }
+.ci-box {
+  width: 22px; height: 22px; flex-shrink: 0;
+  border: 1.5px solid var(--mist);
+  border-radius: 4px;
+  margin-top: 1px;
+  position: relative;
+  transition: all 0.18s;
+}
+.ci-text { flex: 1; }
+.ci-main { font-size: 13px; color: var(--ink); line-height: 1.5; }
+.ci-time { font-size: 11px; color: var(--stone); margin-top: 2px; font-family: 'Crimson Pro', serif; font-size: 12px; }
+.check-reset {
+  display: block; width: calc(100% - 28px);
+  margin: 14px auto 0;
+  padding: 10px;
+  background: var(--cream);
+  border: 1px solid var(--mist);
+  border-radius: 2px;
+  font-size: 12px; color: var(--stone);
+  text-align: center; cursor: pointer;
+  font-family: 'Noto Sans SC', sans-serif;
+  letter-spacing: 0.5px;
+}
+.check-reset:active { background: var(--mist); }
+
+/* ── EXERCISE SAFETY ── */
+.safety-box {
+  margin: 14px 14px 0;
+  background: var(--red-light);
+  border: 1.5px solid #ef9a9a;
+  padding: 14px;
+}
+.safety-title {
+  font-size: 13px; font-weight: 600; color: #b71c1c;
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 10px;
+}
+.safety-item {
+  font-size: 12px; color: #c62828; line-height: 1.6;
+  padding: 3px 0;
+}
+.safety-item::before { content: '✕ '; font-weight: 700; }
+
+.safe-box {
+  margin: 10px 14px 0;
+  background: var(--jade-light);
+  border: 1.5px solid #80cbc4;
+  padding: 14px;
+}
+.safe-title {
+  font-size: 13px; font-weight: 600; color: var(--jade);
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 10px;
+}
+.safe-item { font-size: 12px; color: #1b5e20; line-height: 1.6; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.safe-item:last-child { border-bottom: none; }
+.safe-item strong { color: var(--jade); }
+
+/* ── METRICS TABLE ── */
+.metrics-wrap { overflow-x: auto; margin: 14px 14px 0; }
+.metrics-table {
+  width: 100%; min-width: 520px;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.metrics-table th {
+  background: var(--ink); color: var(--gold-light);
+  padding: 9px 10px; text-align: left;
+  font-weight: 500; letter-spacing: 0.3px;
+  font-size: 11px;
+}
+.metrics-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--cream);
+  color: #333; vertical-align: top;
+  line-height: 1.5;
+}
+.metrics-table tr:last-child td { border-bottom: none; }
+.metrics-table .cat { color: var(--gold); font-family: 'Noto Serif SC', serif; font-size: 11px; }
+.target-final { color: var(--vermillion); font-weight: 600; }
+
+/* ── TOOLS ── */
+.tool-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--cream);
+}
+.tool-item:last-child { border-bottom: none; }
+.tool-icon-w { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+.tool-body { flex: 1; }
+.tool-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.tool-desc { font-size: 12px; color: var(--stone); margin-top: 3px; line-height: 1.5; }
+.tool-badge {
+  flex-shrink: 0;
+  background: var(--cream);
+  color: var(--stone);
+  font-size: 10px; padding: 2px 7px;
+  border-radius: 2px; height: fit-content;
+  margin-top: 2px;
+}
+
+/* ── PRINCIPLES ── */
+.principle-item {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--cream);
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.principle-item:last-child { border-bottom: none; }
+.p-num {
+  font-family: 'Crimson Pro', serif;
+  font-size: 28px; color: var(--mist);
+  line-height: 1; flex-shrink: 0;
+  width: 32px; text-align: center;
+}
+.p-body {}
+.p-title { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.p-desc { font-size: 12px; color: var(--stone); line-height: 1.6; }
+
+/* ── BOTTOM NAV ── */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: white;
+  border-top: 1px solid var(--mist);
+  display: flex;
+  padding-bottom: var(--safe-bottom);
+  z-index: 200;
+}
+.bn-item {
+  flex: 1; padding: 10px 4px 6px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 3px;
+  cursor: pointer;
+  font-size: 10px; color: var(--stone);
+  letter-spacing: 0.3px;
+  transition: color 0.15s;
+}
+.bn-item.active { color: var(--vermillion); }
+.bn-icon { font-size: 20px; line-height: 1; }
+
+/* ── SECTION HEADING ── */
+.sec-heading {
+  padding: 20px 14px 4px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px; color: var(--ink);
+  display: flex; align-items: center; gap: 8px;
+}
+.sec-heading::before {
+  content: ''; display: block;
+  width: 3px; height: 20px;
+  background: var(--vermillion);
+}
+.sec-sub { padding: 0 14px 14px; font-size: 12px; color: var(--stone); }
+
+/* progress ring small */
+.prog-row { display: flex; gap: 10px; flex-wrap: wrap; padding: 14px 14px 0; }
+.prog-chip {
+  flex: 1; min-width: 90px;
+  background: white; border: 1px solid var(--mist);
+  padding: 10px 12px; text-align: center;
+}
+.prog-chip .pc-val { font-family: 'Crimson Pro', serif; font-size: 24px; color: var(--ink); }
+.prog-chip .pc-label { font-size: 10px; color: var(--stone); margin-top: 2px; letter-spacing: 0.3px; }
+.prog-chip .pc-target { font-size: 11px; color: var(--jade); margin-top: 4px; }
+
+/* alert notice */
+.notice {
+  margin: 14px 14px 0;
+  background: #fff8e1;
+  border-left: 3px solid var(--gold);
+  padding: 12px 14px;
+  font-size: 12px; color: #5d4037;
+  line-height: 1.6;
+}
+.notice strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div class="splash">
+  <div class="splash-inner">
+    <h1>太原一年 · 三事精进</h1>
+    <div class="splash-sub">Shanxi · Weight · Classics · English</div>
+    <div class="splash-meta">
+      <span class="meta-chip">1989年生 · <strong>36岁</strong></span>
+      <span class="meta-chip">73.5 kg → <strong>≤70 kg</strong></span>
+      <span class="meta-chip">髂静脉血栓 · 阵发心动过速</span>
+      <span class="meta-chip">周五返京 / 周日晚归</span>
+    </div>
+  </div>
+</div>
+
+<!-- GOAL STRIP -->
+<div class="goal-strip">
+  <div class="goal-item">
+    <div class="goal-icon">⚖️</div>
+    <div class="goal-label">体重精力</div>
+    <div class="goal-val">≤70 kg<br>精力充沛</div>
+  </div>
+  <div class="goal-item">
+    <div class="goal-icon">📖</div>
+    <div class="goal-label">三经背诵</div>
+    <div class="goal-val">内经·伤寒<br>金匮全背</div>
+  </div>
+  <div class="goal-item">
+    <div class="goal-icon">🗣</div>
+    <div class="goal-label">英语流利</div>
+    <div class="goal-val">听说读写<br>日常自如</div>
+  </div>
+</div>
+
+<!-- TOP NAV -->
+<div class="nav" id="topNav">
+  <div class="nav-tab active" onclick="switchSection('checklist', this)">📋 今日打卡</div>
+  <div class="nav-tab" onclick="switchSection('week', this)">📅 本周计划</div>
+  <div class="nav-tab" onclick="switchSection('exercise', this)">🏥 运动方案</div>
+  <div class="nav-tab" onclick="switchSection('milestone', this)">🎯 里程碑</div>
+  <div class="nav-tab" onclick="switchSection('metrics', this)">📊 量化指标</div>
+  <div class="nav-tab" onclick="switchSection('tools', this)">🛠 工具</div>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 1: 今日打卡
+════════════════════════════════════ -->
+<div class="section active" id="sec-checklist">
+
+  <div class="prog-row">
+    <div class="prog-chip">
+      <div class="pc-val" id="cnt-total">0/15</div>
+      <div class="pc-label">今日完成</div>
+      <div class="pc-target">全部打完即达标</div>
+    </div>
+    <div class="prog-chip">
+      <div class="pc-val" id="cnt-w">0/5</div>
+      <div class="pc-label">⚖️ 体重体能</div>
+    </div>
+    <div class="prog-chip">
+      <div class="pc-val" id="cnt-t">0/5</div>
+      <div class="pc-label">📖 经典背诵</div>
+    </div>
+    <div class="prog-chip">
+      <div class="pc-val" id="cnt-e">0/5</div>
+      <div class="pc-label">🗣 英语</div>
+    </div>
+  </div>
+
+  <!-- WEIGHT -->
+  <div class="sec-heading">⚖️ 体重·体能</div>
+  <div class="card">
+    <div class="check-list" id="cl-w">
+      <div class="check-item" onclick="toggle(this,'w')" data-cat="w">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">晨起空腹称重并记录（同时间、同状态）</div>
+          <div class="ci-time">06:00–06:10</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'w')" data-cat="w">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">完成今日运动（踝泵×6组 / 步行分段30min / 卧位训练二选其一以上）</div>
+          <div class="ci-time">视当日计划</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'w')" data-cat="w">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">午餐7分饱，蔬菜≥1/2，蛋白质≥1/4，不饮酒</div>
+          <div class="ci-time">12:00–12:30</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'w')" data-cat="w">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">晚餐18:30前结束，轻食为主，之后不吃固体食物</div>
+          <div class="ci-time">≤18:30</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'w')" data-cat="w">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">睡前抬腿平躺15min，精力自评1–5分并记录</div>
+          <div class="ci-time">21:30–22:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TCM -->
+  <div class="sec-heading">📖 经典背诵</div>
+  <div class="card">
+    <div class="check-list" id="cl-t">
+      <div class="check-item" onclick="toggle(this,'t')" data-cat="t">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">出声晨读新内容2–3段（不看底本，背诵为主）</div>
+          <div class="ci-time">06:30–07:00</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'t')" data-cat="t">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">午间碎片：随取条文卡默背5条</div>
+          <div class="ci-time">12:10–12:20</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'t')" data-cat="t">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">晚间精读45min：理解注释 + 背诵新段落</div>
+          <div class="ci-time">19:00–19:45</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'t')" data-cat="t">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">Anki条文复习（间隔重复，至少20张旧卡）</div>
+          <div class="ci-time">21:00–21:20</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'t')" data-cat="t">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">记录今日背诵段落数（周五默写自测）</div>
+          <div class="ci-time">22:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENGLISH -->
+  <div class="sec-heading">🗣 英语</div>
+  <div class="card">
+    <div class="check-list" id="cl-e">
+      <div class="check-item" onclick="toggle(this,'e')" data-cat="e">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">精听：VOA/BBC 1段，逐句跟读出声（单日）/ 影子跟读15min（双日）</div>
+          <div class="ci-time">06:30–07:00</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'e')" data-cat="e">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">Claude口语对话练习或影子跟读输出15min</div>
+          <div class="ci-time">17:30–17:45</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'e')" data-cat="e">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">查当日生词3–5个，例句加入Anki卡片</div>
+          <div class="ci-time">随时</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'e')" data-cat="e">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">Anki词汇复习（至少20张旧卡）</div>
+          <div class="ci-time">21:00–21:20</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggle(this,'e')" data-cat="e">
+        <div class="ci-box"></div>
+        <div class="ci-text">
+          <div class="ci-main">英文写作：日记/短文50–150词（每周3次，今日是否轮到？）</div>
+          <div class="ci-time">20:00–20:20</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="check-reset" onclick="resetAll()">↺ 重置今日打卡</button>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 2: 本周计划
+════════════════════════════════════ -->
+<div class="section" id="sec-week">
+  <div class="sec-heading">标准周计划</div>
+  <div class="sec-sub">点击切换当日 · 周五下午返京 · 周日晚返太原</div>
+
+  <div class="day-tabs">
+    <div class="day-tab active" onclick="switchDay('mon',this)">周一</div>
+    <div class="day-tab" onclick="switchDay('tue',this)">周二</div>
+    <div class="day-tab" onclick="switchDay('wed',this)">周三</div>
+    <div class="day-tab" onclick="switchDay('thu',this)">周四</div>
+    <div class="day-tab" onclick="switchDay('fri',this)">周五</div>
+    <div class="day-tab" onclick="switchDay('sat',this)">周末</div>
+  </div>
+
+  <!-- MON -->
+  <div class="day-panel active card" id="day-mon" style="margin-top:14px;">
+    <div class="time-block">
+      <div class="tb-time">06:00</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">晨起称重记录 → 踝泵运动20次×3组 → 仰卧直腿抬高3组</div><div class="tb-sub">全程卧位或坐位，不增加下肢静水压</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">06:30</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">晨读经典30min：新内容出声背诵 + 前日复习</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">08–12</div>
+      <div class="tb-content" style="color:#999;font-size:12px;">工作时间 · 每30min做一组踝泵（坐姿）</div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">12:00</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">午餐控量（碗量法）+ 午间条文卡背诵10min</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">17:00</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">分段步行回宿舍：每段25–30min，中间坐歇10min</div><div class="tb-sub">穿弹力袜，心率感觉能说完整句子为宜</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">19:00</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">晚间精读45min：注释理解 + 新段落背诵</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">21:00</div>
+      <div class="tb-content"><span class="tb-tag tag-e">英</span><div class="tb-title">Anki英语词汇复习20min</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">21:30</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">抬腿平躺15min + 精力评分记录</div></div>
+    </div>
+  </div>
+
+  <!-- TUE -->
+  <div class="day-panel card" id="day-tue" style="margin-top:14px;">
+    <div class="time-block">
+      <div class="tb-time">06:00</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">晨起称重 → 分段步行上班（25–30min，穿弹力袜）</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">06:30</div>
+      <div class="tb-content"><span class="tb-tag tag-e">英</span><div class="tb-title">精听30min：VOA慢速/常速，逐句跟读出声</div><div class="tb-sub">不求快，求发音准确，边走边听</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">08–12</div>
+      <div class="tb-content" style="color:#999;font-size:12px;">工作时间 · 每30min踝泵一组</div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">12:00</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">午间条文卡背诵10min + 控量午餐</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">17:30</div>
+      <div class="tb-content"><span class="tb-tag tag-e">英</span><div class="tb-title">Claude口语对话练习15min（设场景：诊室/学术/日常）</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">18:30</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">轻食晚餐结束 · 饭后坐姿踝泵10min</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">19:00</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">晚间精读+背诵45min</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">21:00</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">Anki条文复习20min</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">21:30</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">抬腿平躺15min</div></div>
+    </div>
+  </div>
+
+  <!-- WED -->
+  <div class="day-panel card" id="day-wed" style="margin-top:14px;">
+    <div class="time-block">
+      <div class="tb-time">06:00</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">晨起称重 → 卧位训练：屈膝踩单车3组 + 侧卧髋外展2组 + 踝泵</div><div class="tb-sub">全程床上，约15–20min，不离开卧面</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">06:30</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">晨读经典30min：新内容背诵</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">08–12</div>
+      <div class="tb-content" style="color:#999;font-size:12px;">工作时间 · 踝泵每30min一组</div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">17:30</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">分段步行20–25min回宿舍（不超过30min连续）</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">19:00</div>
+      <div class="tb-content"><span class="tb-tag tag-e">英</span><div class="tb-title">英语写作20min：英文日记/短文50–150词</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">19:30</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">经典背诵复习30min</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">21:00</div>
+      <div class="tb-content"><span class="tb-tag tag-e">英</span><div class="tb-title">Anki英语词汇复习20min</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">21:30</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">抬腿平躺15min</div></div>
+    </div>
+  </div>
+
+  <!-- THU -->
+  <div class="day-panel card" id="day-thu" style="margin-top:14px;">
+    <div class="time-block">
+      <div class="tb-time">06:00</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">晨起称重 → 分段步行上班</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">06:30</div>
+      <div class="tb-content"><span class="tb-tag tag-e">英</span><div class="tb-title">影子跟读训练30min（VOA/TED-Ed边走边跟读）</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">08–12</div>
+      <div class="tb-content" style="color:#999;font-size:12px;">工作时间 · 踝泵每30min一组</div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">17:30</div>
+      <div class="tb-content"><span class="tb-tag tag-e">英</span><div class="tb-title">英语泛听20min（播客/TED-Ed，不求精，感受语感）</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">19:00</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">经典背诵45min：本周内容整合复习</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">21:00</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">记录本周体重趋势，下周饮食调整计划</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">21:30</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">坐姿上肢弹力带训练20min（肩推/划船/胸推）+ 抬腿平躺</div><div class="tb-sub">全程坐姿，避免憋气，心率保持可说话强度</div></div>
+    </div>
+  </div>
+
+  <!-- FRI -->
+  <div class="day-panel card" id="day-fri" style="margin-top:14px;">
+    <div class="time-block">
+      <div class="tb-time">06:00</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">晨起称重 → 踝泵10min</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">06:30</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">本周经典内容全部回顾15min + 默背测试</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">下午</div>
+      <div class="tb-content"><span class="tb-tag tag-e">英</span><div class="tb-title">高铁途中：英语听力泛听 / 词汇复习 / 本周英语写作收尾</div><div class="tb-sub">高铁座位时间是宝贵的静态学习窗口</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">到京</div>
+      <div class="tb-content" style="color:#999;font-size:12px;">放松陪伴家人，保留最小核心习惯不断链</div>
+    </div>
+  </div>
+
+  <!-- WEEKEND -->
+  <div class="day-panel card" id="day-sat" style="margin-top:14px;">
+    <div class="notice" style="margin:0;border-radius:0;">🏠 周末在京：保最小核心，不断链即胜利</div>
+    <div class="time-block">
+      <div class="tb-time">晨</div>
+      <div class="tb-content"><span class="tb-tag tag-w">体</span><div class="tb-title">称重 + 户外慢走30min（陪家人，分段，穿弹力袜）</div><div class="tb-sub">不超30min连续，避免下肢肿胀</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">上午</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">经典默写复习：本周内容纸笔默写，比对原文</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">下午</div>
+      <div class="tb-content"><span class="tb-tag tag-e">英</span><div class="tb-title">英语精读1篇（医学/通用）+ 英语影视1集（带字幕）</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">晚</div>
+      <div class="tb-content"><span class="tb-tag tag-t">经</span><div class="tb-title">全周默写验收 + 月末复盘（每月最后一个周日）</div></div>
+    </div>
+    <div class="time-block">
+      <div class="tb-time">周日晚</div>
+      <div class="tb-content" style="color:#666;font-size:12px;">21:30前返太原 · 高铁途中踝泵运动（坐姿）</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 3: 运动方案（安全版）
+════════════════════════════════════ -->
+<div class="section" id="sec-exercise">
+  <div class="sec-heading">运动方案 · 安全个体化</div>
+  <div class="sec-sub">左髂静脉血栓（线样血流，停抗凝） + 阵发性心动过速</div>
+
+  <div class="safety-box">
+    <div class="safety-title">⛔ 绝对禁止</div>
+    <div class="safety-item">跳绳、慢跑、快跑（冲击致静脉压骤升）</div>
+    <div class="safety-item">单次步行超过50分钟不休息</div>
+    <div class="safety-item">久站超过30分钟（查房时主动活动踝关节）</div>
+    <div class="safety-item">高温泡脚/泡澡（扩张静脉，加重回流负担）</div>
+    <div class="safety-item">憋气用力动作：硬拉/深蹲大重量（Valsalva效应）</div>
+    <div class="safety-item">运动心率超过120次/min 时继续加量</div>
+  </div>
+
+  <div class="safe-box">
+    <div class="safe-title">✅ 适合方案（每日组合）</div>
+    <div class="safe-item"><strong>① 踝泵运动（全天碎片，随时可做）</strong><br>坐姿/卧姿，脚踝屈伸+环绕，每组20次，每天6–8组。久坐每30min一组。促进肌肉泵，对髂静脉血栓有明确推荐。</div>
+    <div class="safe-item"><strong>② 分段步行（主要有氧）</strong><br>单次控制在25–30min，之后坐下/平躺休息10min再继续。累计目标6000–8000步/日，穿II级弹力袜（15–25mmHg）。回宿舍后脱袜，抬腿平躺15min。</div>
+    <div class="safe-item"><strong>③ 卧位腿部训练（宿舍内，每日）</strong><br>仰卧直腿抬高（30–45°，10–15次×3组）<br>仰卧屈膝踩单车（慢速，30秒×3–4组）<br>侧卧髋外展（15次×2组）<br>全程不离床面，无重力性静脉淤血。</div>
+    <div class="safe-item"><strong>④ 坐姿上肢+核心（每周3次）</strong><br>弹力带肩推/划船/胸推（全程坐姿）<br>平板支撑从20秒起，逐步至60秒<br>不增加下肢静脉压，维持肌肉量辅助减重。</div>
+  </div>
+
+  <div class="notice" style="margin-top:10px;">
+    <strong>心动过速安全边界：</strong>运动时能说完整句子即为安全强度（RPE≤13，约最大心率60–70%）。若出现心悸/突然心跳加快，立即坐下做腹式呼吸。<br><br>
+    <strong>建议购置：</strong>指夹式血氧仪（约50元），运动中随手测心率，超过120次/min即降低强度。<br><br>
+    <strong>提醒：</strong>在太原安顿后，建议主动至当地医院做一次髂静脉随访超声，确认是否置有下腔静脉滤器，是否需要恢复抗凝，不要等到原定复查时间。
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="card-head">减重逻辑调整</div>
+    <div class="card-body" style="font-size:13px;color:#444;line-height:1.7;">
+      运动热量消耗减少后，<strong>饮食控制权重提高</strong>：<br><br>
+      · 晚餐总量 = 午餐的60%，以蔬菜蛋白为主，主食减半<br>
+      · 晚餐18:30前结束，夜间平卧有利于静脉回流<br>
+      · 每日饮水1500–2000ml（太原气候干燥，血液黏度直接影响血栓风险）<br>
+      · 会餐时：夹菜不夹饭，控量不控社交
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 4: 里程碑
+════════════════════════════════════ -->
+<div class="section" id="sec-milestone">
+  <div class="sec-heading">季度里程碑</div>
+
+  <div class="q-tabs">
+    <div class="q-tab active-q1" onclick="switchQ('q1',this)">第一季度</div>
+    <div class="q-tab" onclick="switchQ('q2',this)">第二季度</div>
+    <div class="q-tab" onclick="switchQ('q3',this)">第三季度</div>
+    <div class="q-tab" onclick="switchQ('q4',this)">第四季度</div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <!-- Q1 -->
+    <div class="q-panel active" id="qp-q1">
+      <div class="card-head" style="color:var(--jade);">第一季度 · 第1–13周</div>
+      <div class="card-body">
+        <div class="ms-row">
+          <div class="ms-dot dot-w">⚖️</div>
+          <div class="ms-body">
+            <div class="ms-main">体重降至 <strong>72 kg</strong> 以内</div>
+            <div class="ms-sub">建立饮食记录习惯；踝泵+分段步行成为每日常规；晨起空腹称重不间断</div>
+          </div>
+        </div>
+        <div class="ms-row">
+          <div class="ms-dot dot-t">📖</div>
+          <div class="ms-body">
+            <div class="ms-main">《素问》前 <strong>30篇</strong> 通背</div>
+            <div class="ms-sub">每日出声背诵1–2段，周末默写复习，建立原文索引卡（Anki）</div>
+          </div>
+        </div>
+        <div class="ms-row">
+          <div class="ms-dot dot-e">🗣</div>
+          <div class="ms-body">
+            <div class="ms-main">VOA慢速英语 <strong>无障碍听懂</strong>，开口说短句</div>
+            <div class="ms-sub">完成初级口语100句，每日精听30min，开始影子跟读，克服开口障碍</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="q-panel" id="qp-q2">
+      <div class="card-head" style="color:var(--gold);">第二季度 · 第14–26周</div>
+      <div class="card-body">
+        <div class="ms-row">
+          <div class="ms-dot dot-w">⚖️</div>
+          <div class="ms-body">
+            <div class="ms-main">体重降至 <strong>71 kg</strong> 以内</div>
+            <div class="ms-sub">增加坐姿上肢训练；精力指标：午后无困倦感，睡眠7h+；血管超声随访完成</div>
+          </div>
+        </div>
+        <div class="ms-row">
+          <div class="ms-dot dot-t">📖</div>
+          <div class="ms-body">
+            <div class="ms-main">素问全篇完成 + 《伤寒论》前 <strong>100条</strong></div>
+            <div class="ms-sub">能背诵六经提纲及常用方证，建立条文思维导图，鉴别相似条文</div>
+          </div>
+        </div>
+        <div class="ms-row">
+          <div class="ms-dot dot-e">🗣</div>
+          <div class="ms-body">
+            <div class="ms-main">VOA常速 <strong>跟上70%</strong>，能就话题连说3–5句</div>
+            <div class="ms-sub">每周至少2次Claude对话练习，完成中级词汇1500个积累</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="q-panel" id="qp-q3">
+      <div class="card-head" style="color:var(--vermillion);">第三季度 · 第27–39周</div>
+      <div class="card-body">
+        <div class="ms-row">
+          <div class="ms-dot dot-w">⚖️</div>
+          <div class="ms-body">
+            <div class="ms-main">体重稳定 <strong>70.5 kg</strong> 以内</div>
+            <div class="ms-sub">运动习惯稳固，无代偿性暴食，精力自评稳定≥4分</div>
+          </div>
+        </div>
+        <div class="ms-row">
+          <div class="ms-dot dot-t">📖</div>
+          <div class="ms-body">
+            <div class="ms-main">《伤寒》全篇背诵 + 《金匮》前 <strong>15篇</strong></div>
+            <div class="ms-sub">能对应方证、鉴别相似条文，临床结合思考，可引文解析病案</div>
+          </div>
+        </div>
+        <div class="ms-row">
+          <div class="ms-dot dot-e">🗣</div>
+          <div class="ms-body">
+            <div class="ms-main">BBC/TED基础类 <strong>80%+</strong>，开口无明显停顿</div>
+            <div class="ms-sub">完成医学英语阅读20篇，能写150字英文短文，词汇新增2500+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="q-panel" id="qp-q4">
+      <div class="card-head" style="color:var(--blue);">第四季度 · 第40–52周</div>
+      <div class="card-body">
+        <div class="ms-row">
+          <div class="ms-dot dot-w">⚖️</div>
+          <div class="ms-body">
+            <div class="ms-main">体重达标 <strong>≤70 kg</strong>，全年稳定</div>
+            <div class="ms-sub">精力充沛，告别午后困倦，运动为享受而非任务，下肢肿胀控制良好</div>
+          </div>
+        </div>
+        <div class="ms-row">
+          <div class="ms-dot dot-t">📖</div>
+          <div class="ms-body">
+            <div class="ms-main">《金匮》全篇，三经 <strong>全部通背</strong></div>
+            <div class="ms-sub">能随机抽条背诵，临床问题可引经据典，字义理解，脱稿自如</div>
+          </div>
+        </div>
+        <div class="ms-row">
+          <div class="ms-dot dot-e">🗣</div>
+          <div class="ms-body">
+            <div class="ms-main">日常主题 <strong>流利交流</strong>，读写无明显障碍</div>
+            <div class="ms-sub">完成英文摘要写作5篇，可看原版医学讲座，词汇达7000–8000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 5: 量化指标
+════════════════════════════════════ -->
+<div class="section" id="sec-metrics">
+  <div class="sec-heading">量化验收指标 · 每月自测</div>
+  <div class="metrics-wrap">
+    <table class="metrics-table">
+      <tr>
+        <th>类别</th><th>指标</th><th>基准</th><th>Q1末</th><th>Q2末</th><th>Q3末</th><th class="target-final">年末</th>
+      </tr>
+      <tr>
+        <td class="cat" rowspan="3">⚖️ 体重</td>
+        <td>体重(kg)</td><td>73.5</td><td>≤72</td><td>≤71</td><td>≤70.5</td><td class="target-final">≤70</td>
+      </tr>
+      <tr>
+        <td>精力自评</td><td>2–3分</td><td>≥3</td><td>≥3.5</td><td>≥4</td><td class="target-final">≥4，无困倦</td>
+      </tr>
+      <tr>
+        <td>下肢肿胀</td><td>偶发</td><td>弹力袜后无</td><td>弹力袜后无</td><td>步行耐量↑</td><td class="target-final">基本无肿</td>
+      </tr>
+      <tr>
+        <td class="cat" rowspan="2">📖 经典</td>
+        <td>背诵进度</td><td>熟读水平</td><td>素问前30篇</td><td>素问全+伤寒100条</td><td>伤寒全+金匮15篇</td><td class="target-final">三经全背</td>
+      </tr>
+      <tr>
+        <td>默写正确率</td><td>—</td><td>≥70%</td><td>≥80%</td><td>≥85%</td><td class="target-final">≥90%</td>
+      </tr>
+      <tr>
+        <td class="cat" rowspan="3">🗣 英语</td>
+        <td>听力理解</td><td>VOA慢速勉强</td><td>慢速无障碍</td><td>常速70%</td><td>BBC/TED 80%</td><td class="target-final">日常≥90%</td>
+      </tr>
+      <tr>
+        <td>口语输出</td><td>张不开嘴</td><td>能说简单句</td><td>连说3–5句</td><td>话题无停顿</td><td class="target-final">日常流利</td>
+      </tr>
+      <tr>
+        <td>新增词汇</td><td>—</td><td>+500</td><td>+1500</td><td>+2500</td><td class="target-final">+3000达7–8k</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="notice" style="margin-top:10px;">
+    每月最后一个<strong>周日</strong>花30分钟对照上表自我评估，调整下月策略。月末复盘比每日打卡更能发现系统性偏差。
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 6: 工具
+════════════════════════════════════ -->
+<div class="section" id="sec-tools">
+  <div class="sec-heading">推荐工具 · Apple 生态适配</div>
+
+  <div class="card">
+    <div class="tool-item">
+      <div class="tool-icon-w">📇</div>
+      <div class="tool-body">
+        <div class="tool-name">Anki（Mac桌面版 + AnkiMobile）</div>
+        <div class="tool-desc">经典条文卡 + 英语词汇卡，各建一个牌组，间隔重复算法确保高效记忆。Mac/iPhone全端同步，每日合并复习20–30min。</div>
+      </div>
+      <div class="tool-badge">免费</div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon-w">📊</div>
+      <div class="tool-body">
+        <div class="tool-name">Apple Numbers（体重追踪）</div>
+        <div class="tool-desc">建一张表：日期/体重/精力评分/运动类型/下肢肿胀情况，自动生成折线图，每周一眼看到趋势，iCloud同步。</div>
+      </div>
+      <div class="tool-badge">内置</div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon-w">🎙</div>
+      <div class="tool-body">
+        <div class="tool-name">Claude（口语+经典解析）</div>
+        <div class="tool-desc">英语口语：设场景（诊室对话/学术讨论/日常闲聊），Claude扮演对话方，给出纠错和反馈。经典：难句义理讨论、注家观点比较。</div>
+      </div>
+      <div class="tool-badge">已有</div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon-w">📻</div>
+      <div class="tool-body">
+        <div class="tool-name">VOA Learning English</div>
+        <div class="tool-desc">官网/App均可，分慢速（Learning English）和常速（News）。前3个月慢速精听，Q2起切换常速。下载离线音频备用（太原网络有时不稳）。</div>
+      </div>
+      <div class="tool-badge">免费</div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon-w">⏱</div>
+      <div class="tool-body">
+        <div class="tool-name">Streaks（习惯打卡）</div>
+        <div class="tool-desc">iPhone/Apple Watch，设三项习惯：运动/背诵/英语，连续打卡可视化。断链即提醒，配合本页使用。</div>
+      </div>
+      <div class="tool-badge">可选</div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon-w">🩺</div>
+      <div class="tool-body">
+        <div class="tool-name">指夹式血氧仪（硬件）</div>
+        <div class="tool-desc">约50元，运动中实时监测心率。阵发性心动过速患者运动时必备，超过120次/min立即降低强度，出现心悸立即停止。</div>
+      </div>
+      <div class="tool-badge">建议购</div>
+    </div>
+    <div class="tool-item">
+      <div class="tool-icon-w">🧦</div>
+      <div class="tool-body">
+        <div class="tool-name">II级医用弹力袜（硬件）</div>
+        <div class="tool-desc">15–25mmHg，步行时穿戴，回宿舍后脱下抬腿。对髂静脉血栓患者步行有明确推荐，是运动方案的基础装备。</div>
+      </div>
+      <div class="tool-badge">建议购</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="card-head">经典背诵参考书目</div>
+    <div class="card-body" style="font-size:12px;color:#444;line-height:1.8;">
+      · 人卫版《黄帝内经素问》校注本（背诵白文为准）<br>
+      · 刘渡舟《伤寒论校注》（条文理解首选）<br>
+      · 何任《金匮要略校注》<br>
+      · 《类经》（张介宾，义理理解辅助）<br>
+      <span style="color:var(--stone);font-size:11px;">背诵以原文白文为准，注释仅辅助理解，不进入背诵范围。</span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;">
+    <div class="card-head">如何将本页存为 Safari 主屏书签</div>
+    <div class="card-body" style="font-size:12px;color:#444;line-height:1.9;">
+      1. 用 Safari 打开本页面<br>
+      2. 点击底部 <strong>分享按钮</strong>（□↑）<br>
+      3. 选择 <strong>「添加到主屏幕」</strong><br>
+      4. 名称改为「太原精进」，点击添加<br>
+      5. 图标出现在主屏幕，点击即可全屏打开<br>
+      <span style="color:var(--stone);">全屏模式下隐藏浏览器导航栏，体验接近原生App。</span>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="bn-item active" onclick="switchSection('checklist',null,this)">
+    <div class="bn-icon">📋</div>今日打卡
+  </div>
+  <div class="bn-item" onclick="switchSection('week',null,this)">
+    <div class="bn-icon">📅</div>本周
+  </div>
+  <div class="bn-item" onclick="switchSection('exercise',null,this)">
+    <div class="bn-icon">🏥</div>运动
+  </div>
+  <div class="bn-item" onclick="switchSection('milestone',null,this)">
+    <div class="bn-icon">🎯</div>里程碑
+  </div>
+  <div class="bn-item" onclick="switchSection('metrics',null,this)">
+    <div class="bn-icon">📊</div>指标
+  </div>
+  <div class="bn-item" onclick="switchSection('tools',null,this)">
+    <div class="bn-icon">🛠</div>工具
+  </div>
+</div>
+
+<script>
+// ── Section switching (top nav + bottom nav synced)
+function switchSection(id, topTabEl, bottomTabEl) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.bn-item').forEach(t => t.classList.remove('active'));
+
+  if (topTabEl) topTabEl.classList.add('active');
+  if (bottomTabEl) bottomTabEl.classList.add('active');
+
+  // sync the OTHER nav
+  const tabs = document.querySelectorAll('.nav-tab');
+  const btns = document.querySelectorAll('.bn-item');
+  const order = ['checklist','week','exercise','milestone','metrics','tools'];
+  const idx = order.indexOf(id);
+  if (idx >= 0) {
+    tabs[idx]?.classList.add('active');
+    btns[idx]?.classList.add('active');
+  }
+
+  window.scrollTo(0, 0);
+}
+
+// ── Day tabs
+function switchDay(id, el) {
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('day-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── Quarter tabs
+const qColors = { q1:'active-q1', q2:'active-q2', q3:'active-q3', q4:'active-q4' };
+function switchQ(id, el) {
+  document.querySelectorAll('.q-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.q-tab').forEach(t => {
+    Object.values(qColors).forEach(c => t.classList.remove(c));
+  });
+  document.getElementById('qp-' + id).classList.add('active');
+  el.classList.add(qColors[id]);
+}
+
+// ── Checklist toggle
+const counts = { w:0, t:0, e:0 };
+const totals = { w:5, t:5, e:5 };
+
+function toggle(el, cat) {
+  const wasDone = el.classList.contains('done');
+  el.classList.toggle('done');
+  counts[cat] += wasDone ? -1 : 1;
+  updateCounts();
+  saveState();
+}
+
+function updateCounts() {
+  const total = counts.w + counts.t + counts.e;
+  const totalMax = totals.w + totals.t + totals.e;
+  document.getElementById('cnt-total').textContent = total + '/' + totalMax;
+  document.getElementById('cnt-w').textContent = counts.w + '/' + totals.w;
+  document.getElementById('cnt-t').textContent = counts.t + '/' + totals.t;
+  document.getElementById('cnt-e').textContent = counts.e + '/' + totals.e;
+}
+
+function resetAll() {
+  document.querySelectorAll('.check-item').forEach(el => el.classList.remove('done'));
+  counts.w = 0; counts.t = 0; counts.e = 0;
+  updateCounts();
+  saveState();
+}
+
+// ── Persist state in sessionStorage (resets each day naturally)
+function saveState() {
+  const today = new Date().toDateString();
+  const items = [...document.querySelectorAll('.check-item')].map(el => el.classList.contains('done'));
+  sessionStorage.setItem('phnix_' + today, JSON.stringify(items));
+}
+
+function loadState() {
+  const today = new Date().toDateString();
+  const raw = sessionStorage.getItem('phnix_' + today);
+  if (!raw) return;
+  const items = JSON.parse(raw);
+  const els = document.querySelectorAll('.check-item');
+  counts.w = 0; counts.t = 0; counts.e = 0;
+  els.forEach((el, i) => {
+    if (items[i]) {
+      el.classList.add('done');
+      counts[el.dataset.cat]++;
+    }
+  });
+  updateCounts();
+}
+
+// ── Auto-select today's day tab
+function autoSelectDay() {
+  const days = ['sun','mon','tue','wed','thu','fri','sat'];
+  const d = new Date().getDay();
+  const dayId = days[d];
+  const tab = [...document.querySelectorAll('.day-tab')].find(t =>
+    t.getAttribute('onclick')?.includes(dayId === 'sun' ? 'sat' : dayId)
+  );
+  if (tab) {
+    switchDay(dayId === 'sun' ? 'sat' : dayId, tab);
+  }
+}
+
+loadState();
+autoSelectDay();
+</script>
+</body>
+</html>
